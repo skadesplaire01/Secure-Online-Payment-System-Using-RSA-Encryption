@@ -19,7 +19,9 @@ This project is a secure online payment system designed to protect sensitive fin
 **⚙️ Tech Stack**:
 
 Frontend: HTML, CSS
+
 Backend: C++ (handling RSA encryption & decryption)
+
 Encryption Algorithm: RSA (Rivest-Shamir-Adleman)
 
 **🔑 How It Works?**:
