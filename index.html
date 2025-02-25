@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Online Payment</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 5px;
+            border: 1px solid #007BFF;
+            word-wrap: break-word;
+        }
+
+        .output label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Secure Online Payment</h2>
+    <div class="form-group">
+        <label for="name">Cardholder Name:</label>
+        <input type="text" id="name" placeholder="Enter cardholder's name">
+    </div>
+
+    <div class="form-group">
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" id="cardNumber" placeholder="Enter card number">
+    </div>
+
+    <div class="form-group">
+        <label for="expiryDate">Expiry Date (MM/YY):</label>
+        <input type="text" id="expiryDate" placeholder="Enter expiry date">
+    </div>
+
+    <button class="btn" onclick="encryptData()">Encrypt</button>
+    <div class="output" id="encryptedOutput">
+        <label>Encrypted Data:</label>
+        <p id="encryptedText"></p>
+    </div>
+
+    <button class="btn" onclick="decryptData()">Decrypt</button>
+    <div class="output" id="decryptedOutput">
+        <label>Decrypted Data:</label>
+        <p id="decryptedText"></p>
+    </div>
+</div>
+
+<script>
+    // Simulate RSA encryption using a simple algorithm (shift ASCII characters)
+    function encryptData() {
+        const name = document.getElementById("name").value;
+        const cardNumber = document.getElementById("cardNumber").value;
+        const expiryDate = document.getElementById("expiryDate").value;
+
+        if (!name || !cardNumber || !expiryDate) {
+            alert("Please fill in all fields");
+            return;
+        }
+
+        // Simple shift encryption (for demo purposes)
+        let encryptedName = shiftString(name, 5);  // Shift each character by 5
+        let encryptedCardNumber = shiftString(cardNumber, 3);  // Shift each character by 3
+        let encryptedExpiryDate = shiftString(expiryDate, 2);  // Shift each character by 2
+
+        document.getElementById("encryptedText").textContent = 
+            `Name: ${encryptedName}, Card Number: ${encryptedCardNumber}, Expiry Date: ${encryptedExpiryDate}`;
+    }
+
+    // Simulate decryption by reversing the shift
+    function decryptData() {
+        const encryptedData = document.getElementById("encryptedText").textContent;
+
+        if (!encryptedData) {
+            alert("Please encrypt data first!");
+            return;
+        }
+
+        // Extracting parts of the encrypted data
+        let encryptedName = encryptedData.match(/Name: (.*), Card/)[1];
+        let encryptedCardNumber = encryptedData.match(/Card Number: (.*), Expiry/)[1];
+        let encryptedExpiryDate = encryptedData.match(/Expiry Date: (.*)/)[1];
+
+        // Decrypt by reversing the shift
+        let decryptedName = shiftString(encryptedName, -5);
+        let decryptedCardNumber = shiftString(encryptedCardNumber, -3);
+        let decryptedExpiryDate = shiftString(encryptedExpiryDate, -2);
+
+        document.getElementById("decryptedText").textContent = 
+            `Name: ${decryptedName}, Card Number: ${decryptedCardNumber}, Expiry Date: ${decryptedExpiryDate}`;
+    }
+
+    // Helper function to shift the characters of a string
+    function shiftString(str, shift) {
+        let result = "";
+        for (let i = 0; i < str.length; i++) {
+            result += String.fromCharCode(str.charCodeAt(i) + shift);
+        }
+        return result;
+    }
+</script>
+
+</body>
+</html>
